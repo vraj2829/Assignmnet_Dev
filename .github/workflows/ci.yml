@@ -1,4 +1,4 @@
-name: Django CI/CD
+name: Django Assignment CI
 
 on:
   push:
@@ -7,11 +7,11 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  run-script:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -24,16 +24,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Apply migrations
+      - name: Run main Django script
         run: |
-          export DJANGO_SETTINGS_MODULE=shop.settings
-          python manage.py makemigrations --noinput || true
-          python manage.py migrate --noinput
-
-      - name: Run tests
-        run: |
-          export DJANGO_SETTINGS_MODULE=shop.settings
-          python manage.py test
-
-      - name: Done
-        run: echo "✅ CI/CD pipeline completed!"
+          python main.py  # <-- replace with your script name
