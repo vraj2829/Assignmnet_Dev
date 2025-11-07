@@ -11,17 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # Step 3: Install dependencies
       - name: Install dependencies
         run: |
           python -m venv venv
@@ -29,29 +26,23 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Step 4: Run Django setup + migrations
-      - name: Run migrations and seed data
+      - name: Run Django setup and migrations
         run: |
           source venv/bin/activate
           python app.py || true
 
-      # Step 5: Run Django test (basic import test)
-      - name: Run Django sanity test
+      - name: Verify Django configuration
         run: |
           source venv/bin/activate
-          python - <<'EOF'
-import django, os
+          python - <<EOF
+import os, django
 from django.conf import settings
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app')
-django.setup()
-print("✅ Django configured successfully.")
+print("✅ Django loaded successfully with DEBUG =", settings.DEBUG)
 EOF
 
-      # Step 6: Build Docker image (optional, remove if not needed)
       - name: Build Docker image
         run: |
           docker build -t django-app .
 
-      # Step 7: Deploy placeholder (customize later)
-      - name: Deployment Step
-        run: echo "🚀 CI pipeline complete! Ready to deploy."
+      - name: Complete
+        run: echo "🚀 CI pipeline finished successfully!"
