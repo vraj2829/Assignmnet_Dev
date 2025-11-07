@@ -26,4 +26,4 @@ jobs:
 
       - name: Run main Django script
         run: |
-          python main.py  # <-- replace with your script name
+          python app.py  # <-- replace with your script name
