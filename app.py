@@ -76,10 +76,33 @@ if __name__ == "__main__":
     call_command("migrate", interactive=False)
 
     # Seed products
-    if not Product.objects.exists():
-        Product.objects.create(name="Laptop", price=899.99, description="A powerful laptop")
-        Product.objects.create(name="Headphones", price=49.99, description="Noise-cancelling headphones")
-        Product.objects.create(name="Smartphone", price=499.99, description="Latest smartphone")
-        Product.objects.create(name="Smartwatch", price=199.99, description="Fitness smartwatch")
+   # Seed 20 products safely
+products_to_add = [
+    {"name": "Laptop", "price": 899.99, "description": "A powerful laptop", "image": "https://images.pexels.com/photos/18105/pexels-photo.jpg"},
+    {"name": "Headphones", "price": 49.99, "description": "Noise-cancelling headphones", "image": "https://m.media-amazon.com/images/I/6151o2Kb8GL.jpg"},
+    {"name": "Smartphone", "price": 499.99, "description": "Latest smartphone", "image": "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg"},
+    {"name": "Smartwatch", "price": 199.99, "description": "Fitness smartwatch", "image": "https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg"},
+    {"name": "Tablet", "price": 299.99, "description": "High-res tablet", "image": "https://images.pexels.com/photos/5077043/pexels-photo-5077043.jpeg"},
+    {"name": "Camera", "price": 399.99, "description": "DSLR camera", "image": "https://in.canon/media/image/2024/07/17/3d47abeaf9574a9ba9401c6ff2ca7bb1_EOS+R5+Mark+II+%26+RF24-105mm+f4L+IS+USM+Front+Slant.png"},
+    {"name": "Monitor", "price": 179.99, "description": "HD monitor", "image": "https://images.pexels.com/photos/572056/pexels-photo-572056.jpeg"},
+    {"name": "Keyboard", "price": 49.99, "description": "Mechanical keyboard", "image": "https://images.pexels.com/photos/374074/pexels-photo-374074.jpeg"},
+    {"name": "Mouse", "price": 29.99, "description": "Wireless mouse", "image": "https://images.pexels.com/photos/1334597/pexels-photo-1334597.jpeg"},
+    {"name": "Printer", "price": 129.99, "description": "Laser printer", "image": "https://images.pexels.com/photos/3920125/pexels-photo-3920125.jpeg"},
+    {"name": "Router", "price": 89.99, "description": "High-speed router", "image": "https://blog.teufelaudio.com/wp-content/uploads/2017/06/what-is-a-router.jpg.webp"},
+    {"name": "Smart Speaker", "price": 99.99, "description": "Voice-controlled speaker", "image": "https://images.pexels.com/photos/374074/pexels-photo-374074.jpeg"},
+    {"name": "External HDD", "price": 79.99, "description": "1TB external hard drive", "image": "https://www.securedatarecovery.com/Media/blog/2023/external-hard-drive.webp"},
+    {"name": "USB Drive", "price": 19.99, "description": "64GB USB flash drive", "image": "https://images.pexels.com/photos/149070/pexels-photo-149070.jpeg"},
+    {"name": "Smart Light", "price": 39.99, "description": "WiFi smart light", "image": "https://images.pexels.com/photos/374074/pexels-photo-374074.jpeg"},
+    {"name": "Fitness Band", "price": 59.99, "description": "Track your activity", "image": "https://images.pexels.com/photos/277394/pexels-photo-277394.jpeg"},
+    {"name": "Gaming Chair", "price": 199.99, "description": "Ergonomic chair", "image": "https://images.pexels.com/photos/696609/pexels-photo-696609.jpeg"},
+    {"name": "Desk Lamp", "price": 29.99, "description": "LED desk lamp", "image": "https://images.pexels.com/photos/204611/pexels-photo-204611.jpeg"},
+    {"name": "Projector", "price": 299.99, "description": "Mini home projector", "image": "https://images.pexels.com/photos/274973/pexels-photo-274973.jpeg"},
+    {"name": "Webcam", "price": 69.99, "description": "HD webcam", "image": "https://images.pexels.com/photos/33923/pexels-photo.jpg"},
+]
 
-    execute_from_command_line(["manage.py", "runserver", "0.0.0.0:8000"])
+
+for p in products_to_add:
+    Product.objects.get_or_create(name=p["name"], defaults=p)
+
+
+execute_from_command_line(["manage.py", "runserver", "0.0.0.0:8000"])
