@@ -4,94 +4,231 @@
     <meta charset="UTF-8">
     <title>{% block title %}Simple Shop{% endblock %}</title>
     <style>
-body { 
-    font-family: 'Segoe UI', Arial; 
-    margin:0; 
-    padding:0; 
-    background:#f5f5f5; 
+/* ===============================
+   GLOBAL RESET & BASE STYLES
+================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-header, footer { 
-    background:#222; 
-    color:white; 
-    padding:10px 20px; 
+body {
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+    background: #f2f2f2;
 }
 
-nav a { 
-    color:white; 
-    margin:0 15px; 
-    text-decoration:none; 
-    font-weight:bold;
+/* ===============================
+   HEADER STYLING
+================================ */
+header {
+    background: #111;
+    color: #fff;
+    padding: 15px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-nav a:hover { 
-    text-decoration:underline; 
+header h1 {
+    font-size: 20px;
+    font-weight: 700;
 }
 
-.container { 
-    max-width: 1000px; 
-    margin:20px auto; 
-    padding:0 10px; 
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+    transition: color 0.3s;
+    font-size: 13px;
 }
 
-.product { 
-    background:white; 
-    padding:20px; 
-    margin:15px; 
-    border-radius:12px; 
-    box-shadow:0 4px 12px rgba(0,0,0,0.15); 
-    display:inline-block; 
-    vertical-align:top; 
-    width:220px; 
-    transition: transform 0.2s, box-shadow 0.2s;
+nav a:hover {
+    color: #ff3f6c;
+}
+
+/* ===============================
+   CONTAINER
+================================ */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+/* ===============================
+   PRODUCT CARD STYLING
+================================ */
+.product {
+    background: #fff;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 15px;
+    display: inline-block;
+    vertical-align: top;
+    width: 220px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.product img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+.product:hover img {
+    transform: scale(1.05);
 }
 
 .product:hover {
-    transform: translateY(-3px);
-    box-shadow:0 8px 20px rgba(0,0,0,0.25);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-.btn { 
-    background:#28a745; 
-    color:white; 
-    padding:10px 18px;  /* bigger button */
-    border:none; 
-    border-radius:8px; 
-    cursor:pointer; 
-    text-decoration:none; 
-    display:inline-block; 
-    margin-top:10px;   /* spacing above button */
-    font-weight:bold;
-    transition: background 0.2s, transform 0.2s;
+.product h3 {
+    font-size: 15px;
+    margin: 10px 0 5px;
+    font-weight: 600;
 }
 
-.btn:hover { 
-    background:#218838; 
-    transform: translateY(-2px);  /* subtle hover effect */
+.product p {
+    font-size: 12px;
+    color: #666;
+    height: 36px; /* fixed height for uniform cards */
+    overflow: hidden;
 }
 
-table { 
-    width:100%; 
-    border-collapse:collapse; 
+.product strong {
+    display: block;
+    margin: 10px 0;
+    color: #ff3f6c;
+    font-size: 14px;
 }
 
-th, td { 
-    border:1px solid #ddd; 
-    padding:10px; 
-    text-align:center; 
+/* ===============================
+   BUTTON STYLING
+================================ */
+.btn {
+    display: inline-block;
+    background: #ff3f6c;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
-th { 
-    background:#222; 
-    color:white; 
+.btn:hover {
+    background: #e02f5b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-@media (max-width:600px){ 
-    .product{ 
-        width:100%; 
-        margin:10px 0; 
+/* ===============================
+   TABLE STYLING (ORDERS)
+================================ */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+th, td {
+    padding: 12px 10px;
+    text-align: center;
+    font-size: 13px;
+}
+
+th {
+    background: #111;
+    color: #fff;
+}
+
+tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* ===============================
+   FOOTER
+================================ */
+footer {
+    background: #111;
+    color: #fff;
+    padding: 20px 30px;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    margin-top: 40px;
+}
+
+footer a {
+    color: #ff3f6c;
+    text-decoration: none;
+    margin: 0 8px;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #fff;
+}
+
+/* ===============================
+   RESPONSIVE MEDIA QUERIES
+================================ */
+@media (max-width: 1024px) {
+    .product {
+        width: 45%;
+        margin: 15px 2.5%;
     }
 }
+
+@media (max-width: 768px) {
+    nav a {
+        font-size: 12px;
+        margin: 0 10px;
+    }
+    .product {
+        width: 48%;
+        margin: 10px 1%;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    nav {
+        margin-top: 10px;
+    }
+    .product {
+        width: 100%;
+        margin: 10px 0;
+    }
+    .container {
+        padding: 0 10px;
+    }
+}
+
 
     </style>
 </head>
