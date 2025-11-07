@@ -26,19 +26,16 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Django setup and migrations
+      - name: Run Django setup
         run: |
           source venv/bin/activate
           python app.py || true
 
       - name: Verify Django configuration
+        shell: bash
         run: |
           source venv/bin/activate
-          python - <<EOF
-import os, django
-from django.conf import settings
-print("✅ Django loaded successfully with DEBUG =", settings.DEBUG)
-EOF
+          python -c "import django; from django.conf import settings; print('✅ Django loaded successfully with DEBUG =', settings.DEBUG)"
 
       - name: Build Docker image
         run: |
