@@ -1,4 +1,4 @@
-name: Django CI
+name: Django CI/CD
 
 on:
   push:
@@ -7,11 +7,11 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -24,9 +24,16 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Check Django loads
+      - name: Run migrations
         run: |
-          python -c "import django; print('✅ Django version:', django.get_version())"
+          python manage.py makemigrations
+          python manage.py migrate
+
+      - name: Run tests
+        run: python manage.py test
+
+      - name: Build Docker image
+        run: docker build -t django-app .
 
       - name: Done
-        run: echo "✅ CI pipeline completed successfully!"
+        run: echo "✅ CI/CD pipeline completed!"
