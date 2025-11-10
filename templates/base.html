@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Simple Shop{% endblock %}</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+
 /* ===============================
    GLOBAL RESET & BASE STYLES
 ================================ */
@@ -14,77 +16,126 @@
 }
 
 body {
-    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
-    font-size: 14px;
-    color: #333;
-    line-height: 1.5;
-    background: #f2f2f2;
-}
-
-/* ===============================
-   HEADER STYLING
-================================ */
-header {
-    background: #111;
-    color: #fff;
-    padding: 15px 30px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    font-family: 'Merriweather', serif;
+    background: #e6f0ff; /* soft deep blue background */
+    color: #1a1a1a;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
-
-header h1 {
-    font-size: 20px;
-    font-weight: 700;
-}
-
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 15px;
-    font-weight: 500;
-    transition: color 0.3s;
-    font-size: 13px;
-}
-
-nav a:hover {
-    color: #ff3f6c;
+    min-height: 100vh;
 }
 
 /* ===============================
-   CONTAINER
+   SIDEBAR MENU
 ================================ */
-.container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 0 15px;
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background: #0d1b33; /* deep blue */
+    color: #ffffff;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 25px 20px;
+    box-shadow: 3px 0 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar.hidden {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar.visible {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sidebar h1 {
+    font-size: 24px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #ff8c42; /* bright orange accent */
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.sidebar nav a {
+    color: #cfd9f1;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 10px 12px;
+    border-radius: 8px;
+}
+
+.sidebar nav a:hover {
+    background: #1a2a4a;
+    color: #ff8c42;
+    transform: translateX(3px);
+}
+
+.sidebar footer {
+    font-size: 13px;
+    text-align: center;
+    color: #a3b1d1;
+    border-top: 1px solid #2a3b5c;
+    padding-top: 15px;
 }
 
 /* ===============================
-   PRODUCT CARD STYLING
+   MAIN CONTENT
+================================ */
+.main-content {
+    margin-left: 260px;
+    padding: 40px;
+    width: calc(100% - 260px);
+    transition: margin-left 0.3s ease;
+}
+
+.main-content h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0d1b33;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* ===============================
+   PRODUCT GRID
 ================================ */
 .product {
-    background: #fff;
-    border-radius: 12px;
-    padding: 15px;
-    margin: 15px;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
     display: inline-block;
-    vertical-align: top;
     width: 220px;
+    margin: 15px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    vertical-align: top;
+}
+
+.product:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 .product img {
     width: 100%;
-    height: 180px;
+    height: 200px;
     object-fit: cover;
     border-radius: 12px;
     transition: transform 0.3s ease;
@@ -94,118 +145,101 @@ nav a:hover {
     transform: scale(1.05);
 }
 
-.product:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
 .product h3 {
-    font-size: 15px;
-    margin: 10px 0 5px;
-    font-weight: 600;
+    font-size: 18px;
+    margin: 12px 0 6px;
+    color: #0d1b33;
+    font-weight: 700;
 }
 
 .product p {
-    font-size: 12px;
-    color: #666;
-    height: 36px; /* fixed height for uniform cards */
-    overflow: hidden;
+    font-size: 14px;
+    color: #555f77;
+    min-height: 50px;
+    margin-bottom: 10px;
 }
 
 .product strong {
+    color: #ff8c42;
+    font-size: 16px;
     display: block;
-    margin: 10px 0;
-    color: #ff3f6c;
-    font-size: 14px;
+    margin-bottom: 12px;
 }
 
-/* ===============================
-   BUTTON STYLING
-================================ */
 .btn {
     display: inline-block;
-    background: #ff3f6c;
-    color: #fff;
-    padding: 8px 15px;
+    background: #0d1b33;
+    color: #ffffff;
+    padding: 10px 18px;
     border-radius: 8px;
-    text-decoration: none;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
+    text-decoration: none;
     transition: all 0.3s ease;
 }
 
 .btn:hover {
-    background: #e02f5b;
+    background: #1a2a4a;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 /* ===============================
-   TABLE STYLING (ORDERS)
+   HAMBURGER MENU BUTTON
 ================================ */
-table {
+.menu-btn {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1100;
+    width: 35px;
+    height: 30px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-btn span {
+    height: 4px;
     width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-th, td {
-    padding: 12px 10px;
-    text-align: center;
-    font-size: 13px;
-}
-
-th {
-    background: #111;
-    color: #fff;
-}
-
-tr:nth-child(even) {
-    background: #f9f9f9;
+    background: #ff8c42;
+    border-radius: 2px;
+    transition: all 0.3s ease;
 }
 
 /* ===============================
-   FOOTER
+   RESPONSIVE DESIGN
 ================================ */
-footer {
-    background: #111;
-    color: #fff;
-    padding: 20px 30px;
-    text-align: center;
-    font-size: 12px;
-    letter-spacing: 0.5px;
-    margin-top: 40px;
-}
-
-footer a {
-    color: #ff3f6c;
-    text-decoration: none;
-    margin: 0 8px;
-    transition: color 0.3s;
-}
-
-footer a:hover {
-    color: #fff;
-}
-
-/* ===============================
-   RESPONSIVE MEDIA QUERIES
-================================ */
-@media (max-width: 1024px) {
-    .product {
-        width: 45%;
-        margin: 15px 2.5%;
-    }
-}
-
 @media (max-width: 768px) {
-    nav a {
-        font-size: 12px;
-        margin: 0 10px;
+    .sidebar {
+        width: 100%;
+        height: auto;
+        top: 0;
+        left: 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        pointer-events: none;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        border-radius: 0;
     }
+
+    .sidebar.visible {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .menu-btn {
+        display: flex;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 25px;
+    }
+
     .product {
         width: 48%;
         margin: 10px 1%;
@@ -213,40 +247,83 @@ footer a:hover {
 }
 
 @media (max-width: 480px) {
-    header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    nav {
-        margin-top: 10px;
-    }
     .product {
         width: 100%;
         margin: 10px 0;
     }
-    .container {
-        padding: 0 10px;
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .main-content h2 {
+        font-size: 22px;
     }
 }
+
+/* ===============================
+   ORDERS TABLE STYLING
+================================ */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+}
+
+table th, table td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #e0e5f2;
+}
+
+table th {
+    background-color: #0d1b33;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+table tr:hover {
+    background-color: #f0f4ff;
+}
+
+</style>
+
 
 
     </style>
 </head>
 <body>
-    <header>
-        <h1>🛍️ Simple Shop</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/about/">About</a>
-            <a href="/products/">Products</a>
-            <a href="/orders/">Orders</a>
-        </nav>
-    </header>
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
-    <footer>
-        <p>&copy; 2025 Simple Shop. All rights reserved.</p>
-    </footer>
+    <div class="menu-btn" onclick="toggleSidebar()">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+ <div class="sidebar">
+    <h1> 🏎️Swag Riding</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about/">About</a>
+        <a href="/products/">Products</a>
+        <a href="/orders/">Orders</a>
+    </nav>
+    <footer>&copy; 2025 SwagRiding</footer>
+</div>
+
+<div class="main-content">
+    {% block content %}{% endblock %}
+</div>
+
+<script>
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('visible');
+}
+</script>
+
 </body>
 </html>

@@ -9,7 +9,7 @@
     <h3>{{ p.name }}</h3>
     <p>{{ p.description }}</p>
     <strong>${{ p.price }}</strong><br>
-    <a class="btn" href="/buy/{{ p.id }}/">Buy Now</a>
+    <a class="btn" onclick="alert('Ordered successfully!')" href="/buy/{{ p.id }}/">Buy Now</a>
 </div>
 {% empty %}
 <p>No products available.</p>
